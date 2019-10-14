@@ -1,14 +1,15 @@
-const Discord = require('discord.js');
-const client = new Discord.Client();
+const { Client } = require('discord.js'); // pour n'importer que Client, et non toute la bibliothèque Discord.js, app plus légère
+const { TOKEN, PREFIX } = require('./config.js');
+const client = new Client(); // et donc plus new Discord.Client(). On peut passer des options à client de cette manière: new Client ({ options }) (voir doc)
 
 client.on('ready', () => {
-  console.log(`Logged in as ${client.user.tag}!`);
+  console.log('Connecté!');
 });
 
 client.on('message', msg => {
-  if (msg.content === 'ping') {
-    msg.reply('Pong!');
+  if (msg.content.startsWith(`${PREFIX}ping`)) {
+    msg.channel.send('Pong!');
   }
 });
 
-client.login('NjI3MTc4MzY5MjIxNTI1NTM1.XaSgLA.-F8wRE2Xx6NwNRPnvtk6QlUl9KE');
+client.login(TOKEN);
