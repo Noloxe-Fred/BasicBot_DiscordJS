@@ -14,4 +14,5 @@ module.exports = async (client, message, args) => {
 			.setFooter('Source: https://dog.ceo/api/breeds/image/random');
 		message.channel.send(embed);
 	}
+
 };

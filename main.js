@@ -10,7 +10,7 @@ client.commands = new Collection();
 client.commands.set('repeat', require('./commands/repeat.js'));
 client.commands.set('role', require('./commands/role.js'));
 client.commands.set('sinfo', require('./commands/sinfo.js'));
-client.commands.set('animals', require('./commands/animals.js'));
+client.commands.set('image', require('./commands/image.js'));
 client.commands.set('eval', require('./commands/eval.js'));
 client.commands.set('config', require('./commands/config.js'));
 
