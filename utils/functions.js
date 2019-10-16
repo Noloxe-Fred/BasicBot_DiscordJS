@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { Guild } = require('../models/guilds.js');
+const { Guild } = require('../models/index');
 
 module.exports = client => {
 	client.getGuild = async guild => {
@@ -17,7 +17,6 @@ module.exports = client => {
 		console.log('DATA = ', data)
 		return data.updateOne(settings);
 	};
-
 
 	client.createGuild = async guild => {
 		const merged = Object.assign({ _id: mongoose.Types.ObjectId() }, guild);

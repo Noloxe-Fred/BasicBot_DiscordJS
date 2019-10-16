@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { DEFAULTSETTINGS: defaults } = require('../config.js');
+const { DEFAULTSETTINGS: defaults } = require('../config');
 
 const guildSchema = mongoose.Schema({
 	_id: mongoose.Schema.Types.ObjectId,
@@ -19,4 +19,4 @@ const guildSchema = mongoose.Schema({
 	}
 });
 
-module.exports = { Guild: mongoose.model('Guild', guildSchema) };
+module.exports = mongoose.model('Guild', guildSchema);
