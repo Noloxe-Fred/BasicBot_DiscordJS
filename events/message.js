@@ -1,3 +1,6 @@
+const { MessageEmbed } = require('discord.js');	
+const popMonster = {};
+
 module.exports = async (client, message) => {
 	const settings = await client.getGuild(message.guild); 
 	const args = message.content.slice(settings.prefix.length).trim().split(/ +/g); // split sépare la phrase, et crée une nouvelle case de tableau pour chaque espace. / +/ enlève les espaces superflus
@@ -11,5 +14,42 @@ module.exports = async (client, message) => {
 	// Ici on vérifie que la commande existe
 	if (client.commands.has(command)) {
 		client.commands.get(command)(client, message, args, settings);
+
+		if (message.channel.name === 'fatalix-zone' || 'larius' || 'praery') {
+			popMonster[message.channel.name] = popMonster[message.channel.name] >= 0 ? (popMonster[message.channel.name] + 1) : 0;
+			console.log('POPMONSTER', popMonster)
+		}
+	}
+
+	if (popMonster[message.channel.name] === 1 ) {
+
+		message.channel.send('UN MONSTRE SAUVAGE APPARAIT');
+
+		const listMonster = ['Antonium', 'Fredericus', 'SerpantDesSables'];
+
+		const randomNumber = (min, max) => {
+			min = Math.ceil(min);
+  		max = Math.floor(max);
+  		return Math.floor(Math.random() * (max - min) + min) + 1;
+		};
+
+		const popNumber = randomNumber(0, listMonster.length - 1);
+
+		const monster = await client.getMonster(listMonster[popNumber]);
+		console.log(popNumber, monster, listMonster[popNumber]);
+
+		const monsterCard = new MessageEmbed();
+
+		monsterCard
+			.setTitle(monster.monsterName)
+			.setThumbnail(monster.imageUrl)
+			.addField('PV', monster.life, true)
+			.addField('Dgt', monster.damage, true)
+			.addField('Init.', monster.initiative, true)
+			.addField('Zone', monster.zone, true);
+
+		message.channel.send(monsterCard);
+
+		popMonster[message.channel.name] = 0;
 	}
 };

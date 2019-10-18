@@ -13,6 +13,12 @@ client.commands.set('sinfo', require('./commands/sinfo.js'));
 client.commands.set('image', require('./commands/image.js'));
 client.commands.set('eval', require('./commands/eval.js'));
 client.commands.set('config', require('./commands/config.js'));
+client.commands.set('test', require('./commands/test.js'));
+client.commands.set('test2', require('./commands/test2.js'));
+client.commands.set('createmonster', require('./commands/createMonster.js'));
+client.commands.set('popmonster', require('./commands/popMonster.js'));
+
+
 
 client.on('ready', () => require('./events/ready.js')(client));
 client.on('message', msg => require('./events/message.js')(client, msg));
