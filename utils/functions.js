@@ -1,11 +1,12 @@
 const mongoose = require('mongoose');
 const { Guild } = require('../models/index');
+const { DEFAULTSETTINGS} = require('../config.js');
 
 module.exports = client => {
 	client.getGuild = async guild => {
 		const data = await Guild.findOne({ guildID: guild.id });
 		if (data) return data;
-		return client.config.defaultSettings;
+		return DEFAULTSETTINGS;
 	};
 
 	client.updateGuild = async (guild, settings) => {
