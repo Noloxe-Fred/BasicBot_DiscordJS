@@ -1,6 +1,6 @@
 const { MessageEmbed } = require('discord.js');
 
-module.exports = (client, message, args) => {
+exports.run = (client, message, args) => {
 	const embed = new MessageEmbed();
 	if (args[0] === '1') {
 		embed
@@ -21,4 +21,8 @@ module.exports = (client, message, args) => {
 	}
 
 	message.channel.send(embed);
+};
+
+exports.help = {
+	name: 'sinfo'
 };

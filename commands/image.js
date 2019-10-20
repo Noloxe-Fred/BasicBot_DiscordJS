@@ -1,7 +1,7 @@
 const { MessageEmbed } = require('discord.js');
 const fetch = require('node-fetch');
 
-module.exports = async (client, message, args) => {
+exports.run = async (client, message, args) => {
 	message.delete({ timeout: 3000 });
 
 	if (args[0] === 'chien') {
@@ -14,4 +14,8 @@ module.exports = async (client, message, args) => {
 			.setFooter('Source: https://dog.ceo/api/breeds/image/random');
 		message.channel.send(embed);
 	}
+};
+
+exports.help = {
+	name: 'image'
 };

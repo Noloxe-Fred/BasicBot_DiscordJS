@@ -1,6 +1,6 @@
 const { MessageEmbed } = require('discord.js');
 
-module.exports = (client, message, args) => {
+exports.run = (client, message, args) => {
 	const embed = new MessageEmbed();
 
 	if (args[0] === 'Zombie') {
@@ -39,4 +39,8 @@ module.exports = (client, message, args) => {
 			.addField('IntergaCred', 2213); 
 	}
 	message.channel.send(embed);	
+};
+
+exports.help = {
+	name: 'test'
 };

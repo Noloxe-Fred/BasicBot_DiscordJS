@@ -1,6 +1,6 @@
 const { MessageEmbed } = require('discord.js');
 
-module.exports = async (client, message, args) => {
+exports.run = async (client, message, args) => {
 	message.delete({ timeout: 3000 });
 
   const monster = await client.getMonster(args[0]);
@@ -15,4 +15,8 @@ module.exports = async (client, message, args) => {
     .addField('Zone', monster.zone, true);
 
   message.channel.send(embed);
+};
+
+exports.help = {
+  name: 'popMonster'
 };

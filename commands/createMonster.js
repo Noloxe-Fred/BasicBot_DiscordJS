@@ -1,4 +1,4 @@
-module.exports = async (client, message, args) => {
+exports.run = async (client, message, args) => {
 	const newMonster = {
     monsterName: args[0], // string
     life: args[1], // number
@@ -16,4 +16,8 @@ module.exports = async (client, message, args) => {
   };
   console.log('CMD createMonster', newMonster);
 	await client.createMonster(newMonster);
+};
+
+exports.help = {
+  name: 'createMonster'
 };
