@@ -1,4 +1,4 @@
-module.exports = (client, message, args) => {
+exports.run = (client, message, args) => {
 	const logsChannel = message.guild.channels.find(r => r.name === 'logs');
 	const joinArgs = args.join(' ');
 	//	const role = message.guild.roles.find(r => r.name === args[0]);  Cette commande permettait de lire un rôle après découpage de la string, et donc pas de rôle qui contiennent d'espace.
@@ -14,4 +14,8 @@ module.exports = (client, message, args) => {
 		logsChannel.send(`J'ai ajouté le rôle ${role} à ${message.member}`);
 		message.delete({ timeout: 3000 });
 	}
+};
+
+exports.help = {
+	name: 'role'
 };
