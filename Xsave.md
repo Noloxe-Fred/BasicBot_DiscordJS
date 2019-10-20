@@ -1,0 +1,1 @@
+PREFIXeval client.emit('guildCreate', message.guild);
