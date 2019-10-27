@@ -1,4 +1,3 @@
-const { MessageEmbed } = require('discord.js');
 const popMonster = {};
 
 module.exports = async (client, message) => {
@@ -14,7 +13,7 @@ module.exports = async (client, message) => {
 
 	if (message.content.indexOf(settings.prefix) !== 0) return; // Permet de ne pas aller plus loin si il n'y a pas de commande: optimisation
 
-	console.log('args=', args, ' et cmd=', command);
+	console.log('args=', args, ' et cmd=', command, 'et channelName=', message.channel.name);
 
 	// Ici on vérifie que la commande existe
 	const cmd = client.commands.get(command);
@@ -22,40 +21,20 @@ module.exports = async (client, message) => {
 	cmd.run(client, message, args, settings);
 
 	// Ici, on vérifie le channel de la cmd, et on incrémente un compteur
-	if (message.channel.name === ('fatalix-zone' || 'larius' || 'praery')) {
-		popMonster[message.channel.name] = popMonster[message.channel.name] >= 0 ? (popMonster[message.channel.name] + 1) : 0;
+	if (message.channel.name === 'larius') {
+		if (!popMonster[message.channel.name]) popMonster[message.channel.name] = {count: 0, checkMonster: false };
+		if (popMonster[message.channel.name].checkMonster) return undefined;
+
+		popMonster[message.channel.name].count = popMonster[message.channel.name].count + 1;
 		console.log('POPMONSTER', popMonster, message.channel.name)
 
-		if (popMonster[message.channel.name] === 1 ) {
+		if (popMonster[message.channel.name].count === 2 ) {
 
 			message.channel.send('UN MONSTRE SAUVAGE APPARAIT');
 
-			const listMonster = ['Antonium', 'Fredericus', 'SerpantDesSables'];
-
-			const randomNumber = (min, max) => {
-				min = Math.ceil(min);
-				  max = Math.floor(max);
-				  return Math.floor(Math.random() * (max - min) + min) + 1;
-			};
-
-			const popNumber = randomNumber(0, listMonster.length - 1);
-
-			const monster = await client.getMonster(listMonster[popNumber]);
-			console.log(popNumber, monster, listMonster[popNumber]);
-
-			const monsterCard = new MessageEmbed();
-
-			monsterCard
-				.setTitle(monster.monsterName)
-				.setThumbnail(monster.imageUrl)
-				.addField('PV', monster.life, true)
-				.addField('Dgt', monster.damage, true)
-				.addField('Init.', monster.initiative, true)
-				.addField('Zone', monster.zone, true);
-
-			message.channel.send(monsterCard);
-
-			popMonster[message.channel.name] = 0;
+			client.commands.get('popmonster').run(client, message, args);
+			popMonster[message.channel.name].checkMonster = true;
+			popMonster[message.channel.name].count = 0;
 		}
 	}
 };

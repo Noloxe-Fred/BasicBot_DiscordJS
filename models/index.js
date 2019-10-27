@@ -1,4 +1,6 @@
 module.exports = {
 	Guild: require('./guilds'),
-	Bestiary: require('./bestiary')
+	Bestiary: require('./bestiary'),
+	PersistMonster: require('./persistMonster'),
+	Character: require('./character')
 };
