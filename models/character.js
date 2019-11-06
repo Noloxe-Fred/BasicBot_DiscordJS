@@ -5,6 +5,7 @@ const characterSchema = mongoose.Schema({
 	name: String,
 	level: Number,
 	xp: Number,
+	carac: Array,
 	profession: {
 		name: String,
 		grade: String
