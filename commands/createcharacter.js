@@ -1,10 +1,6 @@
 const { MessageEmbed } = require('discord.js');
 
-const checkResult = () => {
-
-}
-
-const stepThreeAwait = (newCharacter, messageOrigin, client) => {
+const stepThree = (newCharacter, messageOrigin, client) => {
 	const displayEmbed = new MessageEmbed();
 	displayEmbed
 		.setTitle('Choix de votre faction')
@@ -28,10 +24,10 @@ const stepThreeAwait = (newCharacter, messageOrigin, client) => {
 
 						if (countResponse < 2) {
 							message.channel.send("`Vous n'avez pas choisi de faction, merci de recommencer`");
-							return stepThreeAwait(newCharacter, messageOrigin, client);
+							return stepThree(newCharacter, messageOrigin, client);
 						} else if (countResponse > 2) {
 							message.channel.send('`Vous avez choisi plusieurs factions, merci de recommencer`');
-							return stepThreeAwait(newCharacter, messageOrigin, client);
+							return stepThree(newCharacter, messageOrigin, client);
 						}
 						const faction = response.find(reaction => reaction.emoji.name !== '✅')
 
@@ -44,14 +40,14 @@ const stepThreeAwait = (newCharacter, messageOrigin, client) => {
 							case '👎':
 								if (newCharacter.profession.name === 'Milicien') {
 									message.channel.send('`Vous êtes Milicien, vous ne pouvez pas rejoindre la Horde`');
-									return stepThreeAwait(newCharacter, messageOrigin, client);
+									return stepThree(newCharacter, messageOrigin, client);
 								}
 								newCharacter.faction = 'Horde';
 								message.channel.send('`Votre création de personnage est terminée`');
 								message.channel.send(`Vous êtes un \`${newCharacter.profession.name}\`, avec pour compétence \`${newCharacter.skills}\` et vous avez rejoint la faction \`${newCharacter.faction}\``);
 								return newCharacter;
 							default:
-								return stepThreeAwait(newCharacter, messageOrigin, client);
+								return stepThree(newCharacter, messageOrigin, client);
 						}
 					}
 				}
@@ -59,7 +55,7 @@ const stepThreeAwait = (newCharacter, messageOrigin, client) => {
 		});
 };
 
-const stepTwoAwait = (newCharacter, messageOrigin, client) => {
+const stepTwo = (newCharacter, messageOrigin, client) => {
 	const displayEmbed = new MessageEmbed();
 	displayEmbed
 		.setTitle('Choix de votre compétence')
@@ -85,10 +81,10 @@ const stepTwoAwait = (newCharacter, messageOrigin, client) => {
 
 						if (countResponse < 2) {
 							message.channel.send("`Vous n'avez pas choisi de compétence, merci de recommencer`");
-							return stepTwoAwait(newCharacter, messageOrigin, client);
+							return stepTwo(newCharacter, messageOrigin, client);
 						} else if (countResponse > 2) {
 							message.channel.send('`Vous avez choisi plusieurs compétences, merci de recommencer`');
-							return stepTwoAwait(newCharacter, messageOrigin, client);
+							return stepTwo(newCharacter, messageOrigin, client);
 						}
 						const skill = response.find(reaction => reaction.emoji.name !== '✅');
 						console.log(skill)
@@ -96,15 +92,15 @@ const stepTwoAwait = (newCharacter, messageOrigin, client) => {
 						switch (skill.emoji.name) {
 							case '👍':
 								newCharacter.skills = 'Soin';
-								return stepThreeAwait(newCharacter, messageOrigin, client);
+								return stepThree(newCharacter, messageOrigin, client);
 							case '👎':
 								newCharacter.skills = 'Tir Précis';
-								return stepThreeAwait(newCharacter, messageOrigin, client);
+								return stepThree(newCharacter, messageOrigin, client);
 							case '✊':
 								newCharacter.skills = 'Réparation';
-								return stepThreeAwait(newCharacter, messageOrigin, client);
+								return stepThree(newCharacter, messageOrigin, client);
 							default:
-								return stepTwoAwait(newCharacter, messageOrigin, client);
+								return stepTwo(newCharacter, messageOrigin, client);
 						}
 					}
 				}
@@ -113,7 +109,7 @@ const stepTwoAwait = (newCharacter, messageOrigin, client) => {
 };
 
 
-const professionChoiceAwait = (newCharacter, messageOrigin, client) => {
+const stepOne = (newCharacter, messageOrigin, client) => {
 	const displayEmbed = new MessageEmbed();
 	displayEmbed
 		.setTitle('Choix de votre métier')
@@ -141,26 +137,26 @@ const professionChoiceAwait = (newCharacter, messageOrigin, client) => {
 
 						if (countResponse < 2) {
 							message.channel.send("`Vous n'avez pas choisi de métier, merci de recommencer`");
-							return professionChoiceAwait(newCharacter, messageOrigin, client);
+							return stepOne(newCharacter, messageOrigin, client);
 						} else if (countResponse > 2) {
 							message.channel.send('`Vous avez choisi plusieurs métiers, merci de recommencer`');
-							return professionChoiceAwait(newCharacter, messageOrigin, client);
+							return stepOne(newCharacter, messageOrigin, client);
 						}
 						const profession = response.find(reaction => reaction.emoji.name !== '✅');
 						console.log(profession);
 						switch (profession.emoji.name) {
 							case '👍':
 								newCharacter.profession.name = 'Explorateur';
-								return stepTwoAwait(newCharacter, messageOrigin, client);
+								return stepTwo(newCharacter, messageOrigin, client);
 							case '👎':
 								newCharacter.profession.name = 'Milicien';
-								return stepTwoAwait(newCharacter, messageOrigin, client);
+								return stepTwo(newCharacter, messageOrigin, client);
 							case '✊':
 								newCharacter.profession.name = 'Medic';
-								return stepTwoAwait(newCharacter, messageOrigin, client);
+								return stepTwo(newCharacter, messageOrigin, client);
 							default:
 								newCharacter.profession.name = 'Erreur';
-								return professionChoiceAwait(newCharacter, messageOrigin, client);
+								return stepOne(newCharacter, messageOrigin, client);
 						}
 					}
 				}
@@ -191,7 +187,7 @@ exports.run = async (client, message, args) => {
 	message.channel.send('Vous allez choisir votre métier, votre compétence de départ et votre faction');
 	message.channel.send('A chaque fois, cliquez sur le réaction de votre choix, puis validez');
 
-	newCharacter = professionChoiceAwait(newCharacter, message, client);
+	newCharacter = stepOne(newCharacter, message, client);
 
 	// console.log('CMD createCharacter', newCharacter);
 	// await client.createCharacter(newCharacter);
