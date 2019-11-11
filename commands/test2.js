@@ -1,5 +1,10 @@
+const { MessageEmbed } = require('discord.js');
+
+
 exports.run = (client, message, args) => {
-  message.channel.send('Zligeudigusli');
+  const function1 = () => JSON.parse(args.join(' '));
+
+  function1();
 };
 
 exports.help = {

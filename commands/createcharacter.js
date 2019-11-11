@@ -1,166 +1,8 @@
 const { MessageEmbed } = require('discord.js');
 
-// TEST PROMESSE
+const checkResult = () => {
 
-// const stepThree = (newCharacter, message, client) => {
-// 	return new Promise((resolve, reject) => {
-// 		console.log(newCharacter)
-// 		message.channel.send('Choissisez votre faction: 👍: Alliance / 👎: Horde ')
-// 			.then(async message => {
-// 				await message.react('👍');
-// 				await message.react('👎');
-// 				await message.react('✅');
-// 				let countFaction = 0;
-// 				newCharacter.faction = '';
-// 				const factionMessage = message.id;
-// 				client.on('messageReactionAdd', (reaction, user) => {
-// 					if (reaction.message.id === factionMessage) {
-// 						if (reaction.emoji.name === '👍' && user.username !== 'SooD') {
-// 							newCharacter.faction = 'Alliance';
-// 							countFaction += 1;
-// 						}
-// 						if (reaction.emoji.name === '👎' && user.username !== 'SooD') {
-// 							newCharacter.faction = 'Horde';
-// 							countFaction += 1;
-// 						}
-// 						if (reaction.emoji.name === '✅' && user.username !== 'SooD') {
-// 							if (countFaction === 0) {
-// 								message.channel.send('Vous n\'avez pas choisi de faction');
-// 								return reject(stepThree(newCharacter, message, client)
-// 									.then(() => { console.log('FIN'); })
-// 									.catch(newCharacter => stepThree(newCharacter, message, client)));
-// 							}
-// 							if (countFaction > 1) {
-// 								message.channel.send('Vous avez choisi plusieurs factions');
-// 								return reject(stepThree(newCharacter, message, client)
-// 									.then(() => { console.log('FIN'); })
-// 									.catch(newCharacter => stepThree(newCharacter, message, client)));
-// 							}
-// 							message.channel.send('Votre création de personnage est terminée');
-// 							message.channel.send(`Vous êtes un ${newCharacter.profession.name}, avec pour compétence ${newCharacter.skills} et vous avez rejoint la faction ${newCharacter.faction}`);
-// 							return resolve();
-// 						}
-// 					}
-// 				});
-// 			});
-// 	});
-// };
-
-// const stepTwo = (newCharacter, message, client) => {
-// 	return new Promise((resolve, reject) => {
-// 		message.channel.send('Choissisez votre compétence: 👍: Soin / 👎: Tir précis / ✊: Réparation')
-// 			.then(async message => {
-// 				await message.react('👍');
-// 				await message.react('👎');
-// 				await message.react('✊');
-// 				await message.react('✅');
-// 				let countSkills = 0;
-// 				newCharacter.skills = '';
-// 				const skillsMessage = message.id;
-// 				client.on('messageReactionAdd', (reaction, user) => {
-// 					if (reaction.message.id === skillsMessage) {
-// 						if (reaction.emoji.name === '👍' && user.username !== 'SooD') {
-// 							newCharacter.skills = 'Soin';
-// 							countSkills += 1;
-// 						}
-// 						if (reaction.emoji.name === '👎' && user.username !== 'SooD') {
-// 							newCharacter.skills = 'Tir Précis';
-// 							countSkills += 1;
-// 						}
-// 						if (reaction.emoji.name === '✊' && user.username !== 'SooD') {
-// 							newCharacter.skills = 'Réparation';
-// 							countSkills += 1;
-// 						}
-// 						if (reaction.emoji.name === '✅' && user.username !== 'SooD') {
-// 							if (countSkills === 0) {
-// 								message.channel.send('Vous n\'avez pas choisi de compétences');
-// 								return reject(stepTwo(newCharacter, message, client)
-// 									.then(newCharacter => stepThree(newCharacter, message, client)
-// 										.then(() => { console.log('FIN'); })
-// 										.catch(newCharacter => stepThree(newCharacter, message, client)))
-// 									.catch(newCharacter => stepTwo(newCharacter, message, client)));
-// 							}
-// 							if (countSkills > 1) {
-// 								message.channel.send('Vous avez choisi plusieurs compétences');
-// 								return reject(stepTwo(newCharacter, message, client)
-// 									.then(newCharacter => stepThree(newCharacter, message, client)
-// 										.then(() => { console.log('FIN'); })
-// 										.catch(newCharacter => stepThree(newCharacter, message, client)))
-// 									.catch(newCharacter => stepTwo(newCharacter, message, client)));
-// 							}
-// 							message.channel.send('Etape 3');
-// 							return resolve(stepThree(newCharacter, message, client)
-// 								.then(() => { console.log('FIN'); })
-// 								.catch(newCharacter => stepThree(newCharacter, message, client)));
-// 						}
-// 					}
-
-// 				});
-// 			});
-// 	});
-// };
-
-// const proffesionChoice = (newCharacter, messageOrigin, client) => {
-// 	return new Promise((resolve, reject) => {
-// 		messageOrigin.channel.send('Choissisez votre métier: 👍: Explorateur / 👎: Milicien / ✊: Medecin')
-// 			.then(async message => {
-// 				await message.react('👍');
-// 				await message.react('👎');
-// 				await message.react('✊');
-// 				await message.react('✅');
-// 				newCharacter.profession.name = '';
-// 				let countProfession = 0;
-// 				const professionMessage = message.id;
-// 				client.on('messageReactionAdd', (reaction, user) => {
-// 					if (reaction.message.id === professionMessage) {
-// 						if (reaction.emoji.name === '👍' && user.username !== 'SooD') {
-// 							newCharacter.profession.name = 'Explorateur';
-// 							countProfession += 1;
-// 						}
-// 						if (reaction.emoji.name === '👎' && user.username !== 'SooD') {
-// 							newCharacter.profession.name = 'Milicien';
-// 							countProfession += 1;
-// 						}
-// 						if (reaction.emoji.name === '✊' && user.username !== 'SooD') {
-// 							newCharacter.profession.name = 'Medecin';
-// 							countProfession += 1;
-// 						}
-// 						if (reaction.emoji.name === '✅' && user.username !== 'SooD') {
-// 							console.log(countProfession)
-// 							if (countProfession === 0) {
-// 								message.channel.send('Vous n\'avez pas choisi de métier');
-// 								return reject(proffesionChoice(newCharacter, messageOrigin, client)
-// 									.then(newCharacter =>
-// 										stepTwo(newCharacter, messageOrigin, client)
-// 											.then(newCharacter => stepThree(newCharacter, messageOrigin, client)
-// 												.then(() => { console.log('FIN'); })
-// 												.catch(newCharacter => stepThree(newCharacter, messageOrigin, client)))
-// 											.catch(newCharacter => stepTwo(newCharacter, messageOrigin, client)))
-// 									.catch(m => console.log(m)));
-// 							}
-// 							else if (countProfession > 1) {
-// 								message.channel.send('Vous avez choisi plusieurs métier');
-// 								console.log(message.reactions);
-// 								return reject(proffesionChoice(newCharacter, messageOrigin, client)
-// 									.then(newCharacter =>
-// 										stepTwo(newCharacter, messageOrigin, client)
-// 											.then(newCharacter => stepThree(newCharacter, messageOrigin, client)
-// 												.then(() => { console.log('FIN'); })
-// 												.catch(newCharacter => stepThree(newCharacter, messageOrigin, client)))
-// 											.catch(newCharacter => stepTwo(newCharacter, messageOrigin, client)))
-// 									.catch(m => console.log(m)));
-// 							}
-// 							message.channel.send('Etape 2');
-// 							resolve(newCharacter, client);
-// 						}
-// 					}
-
-// 				});
-// 			});
-// 	});
-// };
-
-// TEST SANS PROMESSE
+}
 
 const stepThreeAwait = (newCharacter, messageOrigin, client) => {
 	const displayEmbed = new MessageEmbed();
@@ -179,13 +21,10 @@ const stepThreeAwait = (newCharacter, messageOrigin, client) => {
 			const factionMessage = message.id;
 			client.on('messageReactionAdd', (reaction, user) => {
 				if (reaction.message.id === factionMessage) {
-					if (reaction.emoji.name === '✅' && user.username !== 'SooD') {
+					if (reaction.emoji.name === '✅' && user.username === messageOrigin.author.username) {
+						const response = message.reactions.filter(reaction => reaction.users.find(user => user.username === messageOrigin.author.username));
 						let countResponse = 0;
-						message.reactions.forEach(reaction => {
-							if (reaction.count === 2) {
-								countResponse += 1;
-							}
-						});
+						response.forEach(r => {countResponse = countResponse + 1});
 
 						if (countResponse < 2) {
 							message.channel.send("`Vous n'avez pas choisi de faction, merci de recommencer`");
@@ -194,16 +33,15 @@ const stepThreeAwait = (newCharacter, messageOrigin, client) => {
 							message.channel.send('`Vous avez choisi plusieurs factions, merci de recommencer`');
 							return stepThreeAwait(newCharacter, messageOrigin, client);
 						}
-						const profession = message.reactions.find(reaction => reaction.count === 2 && reaction.emoji.name !== '✅')
+						const faction = response.find(reaction => reaction.emoji.name !== '✅')
 
-						switch (profession.emoji.name) {
+						switch (faction.emoji.name) {
 							case '👍':
 								newCharacter.faction = 'Alliance';
 								message.channel.send('`Votre création de personnage est terminée`');
 								message.channel.send(`Vous êtes un \`${newCharacter.profession.name}\`, avec pour compétence \`${newCharacter.skills}\` et vous avez rejoint la faction \`${newCharacter.faction}\``);
 								return newCharacter;
 							case '👎':
-								console.log(newCharacter.profession.name)
 								if (newCharacter.profession.name === 'Milicien') {
 									message.channel.send('`Vous êtes Milicien, vous ne pouvez pas rejoindre la Horde`');
 									return stepThreeAwait(newCharacter, messageOrigin, client);
@@ -240,13 +78,10 @@ const stepTwoAwait = (newCharacter, messageOrigin, client) => {
 			const skillsMessage = message.id;
 			client.on('messageReactionAdd', (reaction, user) => {
 				if (reaction.message.id === skillsMessage) {
-					if (reaction.emoji.name === '✅' && user.username !== 'SooD') {
+					if (reaction.emoji.name === '✅' && user.username === messageOrigin.author.username) {
+						const response = message.reactions.filter(reaction => reaction.users.find(user => user.username === messageOrigin.author.username));
 						let countResponse = 0;
-						message.reactions.forEach(reaction => {
-							if (reaction.count === 2) {
-								countResponse += 1;
-							}
-						});
+						response.forEach(r => {countResponse = countResponse + 1});
 
 						if (countResponse < 2) {
 							message.channel.send("`Vous n'avez pas choisi de compétence, merci de recommencer`");
@@ -255,9 +90,10 @@ const stepTwoAwait = (newCharacter, messageOrigin, client) => {
 							message.channel.send('`Vous avez choisi plusieurs compétences, merci de recommencer`');
 							return stepTwoAwait(newCharacter, messageOrigin, client);
 						}
-						const profession = message.reactions.find(reaction => reaction.count === 2 && reaction.emoji.name !== '✅')
+						const skill = response.find(reaction => reaction.emoji.name !== '✅');
+						console.log(skill)
 
-						switch (profession.emoji.name) {
+						switch (skill.emoji.name) {
 							case '👍':
 								newCharacter.skills = 'Soin';
 								return stepThreeAwait(newCharacter, messageOrigin, client);
@@ -298,13 +134,10 @@ const professionChoiceAwait = (newCharacter, messageOrigin, client) => {
 			client.on('messageReactionAdd', (reaction, user) => {
 				if (reaction.message.id === professionMessage) {
 
-					if (reaction.emoji.name === '✅' && user.username !== 'SooD') {
+					if (reaction.emoji.name === '✅' && user.username === messageOrigin.author.username) {
+						const response = message.reactions.filter(reaction => reaction.users.find(user => user.username === messageOrigin.author.username));
 						let countResponse = 0;
-						message.reactions.forEach(reaction => {
-							if (reaction.count === 2) {
-								countResponse += 1;
-							}
-						});
+						response.forEach(r => {countResponse = countResponse + 1});
 
 						if (countResponse < 2) {
 							message.channel.send("`Vous n'avez pas choisi de métier, merci de recommencer`");
@@ -313,11 +146,10 @@ const professionChoiceAwait = (newCharacter, messageOrigin, client) => {
 							message.channel.send('`Vous avez choisi plusieurs métiers, merci de recommencer`');
 							return professionChoiceAwait(newCharacter, messageOrigin, client);
 						}
-						const profession = message.reactions.find(reaction => reaction.count === 2 && reaction.emoji.name !== '✅')
-						console.log(profession.emoji.name)
+						const profession = response.find(reaction => reaction.emoji.name !== '✅');
+						console.log(profession);
 						switch (profession.emoji.name) {
 							case '👍':
-								console.log('choix')
 								newCharacter.profession.name = 'Explorateur';
 								return stepTwoAwait(newCharacter, messageOrigin, client);
 							case '👎':
