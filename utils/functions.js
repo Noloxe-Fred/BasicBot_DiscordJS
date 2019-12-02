@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const { Guild } = require('../models/index');
-const { DEFAULTSETTINGS} = require('../config.js');
+const { DEFAULTSETTINGS } = require('../config.js');
 
 module.exports = client => {
 	client.getGuild = async guild => {
