@@ -6,13 +6,17 @@
   },
   "name": "discord.js",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "main.js",
   "license": "MIT",
   "devDependencies": {
     "eslint": "^6.5.1",
-    "eslint-config-aqua": "^7.0.1"
+    "eslint-config-aqua": "^7.0.1",
+    "nodemon": "^2.0.1"
   },
   "eslintConfig": {
     "extends": "aqua/node"
+  },
+  "scripts":{
+    "start": "nodemon main.js"
   }
 }
