@@ -27,6 +27,7 @@ module.exports = client => {
 		createGuild.save().then(g => console.log(`New Guild -> ${g.guildName}`));
 	};
 
+
 	client.getMonster = async channelName => {
 		const data = await Bestiary.find({ channelId: channelName });
 

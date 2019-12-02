@@ -16,7 +16,7 @@
   "eslintConfig": {
     "extends": "aqua/node"
   },
-  "scripts":{
+  "scripts": {
     "start": "nodemon main.js"
   }
 }
