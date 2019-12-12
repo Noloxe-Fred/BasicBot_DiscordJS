@@ -2,7 +2,8 @@
   "dependencies": {
     "discord.js": "discordjs/discord.js",
     "mongoose": "^5.7.5",
-    "node-fetch": "^2.6.0"
+    "node-fetch": "^2.6.0",
+    "nodemon": "^2.0.1"
   },
   "name": "discord.js",
   "version": "1.0.0",
@@ -14,5 +15,8 @@
   },
   "eslintConfig": {
     "extends": "aqua/node"
+  },
+  "scripts": {
+    "start": "nodemon main.js"
   }
 }
