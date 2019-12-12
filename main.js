@@ -1,9 +1,9 @@
 const { Client, Collection } = require('discord.js'); // pour n'importer que Client, et non toute la bibliothèque Discord.js, app plus légère
-const { TOKEN, PREFIX } = require('./config.js');
+const { TOKEN } = require('./config.js');
 const client = new Client(); // et donc plus new Discord.Client(). On peut passer des options à client de cette manière: new Client ({ options }) (voir doc)
 const fs = require('fs');
 
-require('./utils/functions')(client);
+require('./functionsDB/guilds')(client);
 client.mongoose = require('./utils/mongoose');
 client.commands = new Collection();
 
@@ -13,20 +13,29 @@ client.commands = new Collection();
 // client.commands.set('image', require('./commands/image.js'));
 // client.commands.set('eval', require('./commands/eval.js'));
 // client.commands.set('config', require('./commands/config.js'));
-// Désormais on boucle sur le nom des fichiers:
+// Désormais on boucle
 
-fs.readdir('./commands/', (err, files) => {
+fs.readdir('./commands/', (err, dirs) => {
+	console.log(dirs);
 	if (err) return console.error;
 
-	files.forEach(file => {
-		if (!file.endsWith('.js')) return undefined;
+	dirs.forEach(dir => {
+		fs.readdir(`./commands/${dir}`, (err, files) => {
+			console.log(files);
+			if (err) return console.error;
 
-		const props = require(`./commands/${file}`);
-		const cmdName = file.split('.')[0];
+			files.forEach(file => {
+				if (!file.endsWith('.js')) return undefined;
 
-		client.commands.set(cmdName, props);
+				const props = require(`./commands/${dir}/${file}`);
+				const cmdName = file.split('.')[0];
+
+				client.commands.set(cmdName, props);
+			});
+		});
 	});
 });
+
 
 // client.on('ready', () => require('./events/ready.js')(client));
 // client.on('message', msg => require('./events/message.js')(client, msg));

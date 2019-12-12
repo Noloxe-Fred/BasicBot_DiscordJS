@@ -1,3 +1,4 @@
 module.exports = {
-	Guild: require('./guilds')
+	Guild: require('./guilds'),
+	CharacterSheet: require('./character/characterSheet')
 };
