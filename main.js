@@ -16,12 +16,10 @@ client.commands = new Collection();
 // Désormais on boucle
 
 fs.readdir('./commands/', (err, dirs) => {
-	console.log(dirs);
 	if (err) return console.error;
 
 	dirs.forEach(dir => {
 		fs.readdir(`./commands/${dir}`, (err, files) => {
-			console.log(files);
 			if (err) return console.error;
 
 			files.forEach(file => {
@@ -29,7 +27,7 @@ fs.readdir('./commands/', (err, dirs) => {
 
 				const props = require(`./commands/${dir}/${file}`);
 				const cmdName = file.split('.')[0];
-
+				console.log(cmdName);
 				client.commands.set(cmdName, props);
 			});
 		});
