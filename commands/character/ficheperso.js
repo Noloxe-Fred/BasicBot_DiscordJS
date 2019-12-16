@@ -18,7 +18,7 @@ exports.run = async (client, message, args) => {
     .addField('Sexe', main.gender, true)
     .addField('Métier', main.profession.name, true)
     .addField('Niveau', `${main.level}`, true)
-    .addField('XP', `${main.xp}/3600xp`, true)
+    .addField('XP', `${main.xp}/20xp`, true)
     .addField('Argent', main.credit, true)
     .addBlankField()
     .addField('💉 **Etat de Santé**', '---------')
