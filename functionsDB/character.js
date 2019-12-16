@@ -22,6 +22,6 @@ module.exports = client => {
 	client.createCharacter = async characterSheet => {
 		const merged = Object.assign({ _id: mongoose.Types.ObjectId() }, characterSheet);
 		const createCharacter = await new CharacterSheet(merged);
-		createCharacter.save().then(c => console.log(`New Character -> ${c.getMaxListeners.characterName}`));
+		createCharacter.save().then(c => console.log(`New Character -> ${c.main.charactername}`));
 	};
 };

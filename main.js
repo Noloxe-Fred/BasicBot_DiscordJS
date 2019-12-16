@@ -3,7 +3,17 @@ const { TOKEN } = require('./config.js');
 const client = new Client(); // et donc plus new Discord.Client(). On peut passer des options à client de cette manière: new Client ({ options }) (voir doc)
 const fs = require('fs');
 
-require('./functionsDB/guilds')(client);
+// Ajout des fonctions de communications mongodb
+fs.readdir('./functionsDB/', (err, files) => {
+	if (err) return console.error;
+
+	files.forEach(file => {
+		if (!file.endsWith('.js')) return undefined;
+
+		require(`./functionsDB/${file}`)(client);
+	});
+});
+
 client.mongoose = require('./utils/mongoose');
 client.commands = new Collection();
 
@@ -27,7 +37,6 @@ fs.readdir('./commands/', (err, dirs) => {
 
 				const props = require(`./commands/${dir}/${file}`);
 				const cmdName = file.split('.')[0];
-				console.log(cmdName);
 				client.commands.set(cmdName, props);
 			});
 		});

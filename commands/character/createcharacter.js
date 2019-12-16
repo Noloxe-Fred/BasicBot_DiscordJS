@@ -1,10 +1,13 @@
 exports.run = async (client, message, args) => {
 	const user = message.author;
 
+	if (await client.getCharacterSheet(message.author)) return message.channel.send('Vous avez déjà un personnage');
+
 	const newCharacter = {
+		username: user.username,
 		main: {
-			nickname: user.username,
-			charactername: 'Nom du personnage',
+			charactername: user.username,
+			faction: 'MadMaxiens',
 			gender: 'Homme',
 			level: 1,
 			xp: 0,
@@ -32,9 +35,10 @@ exports.run = async (client, message, args) => {
 			charism: 7
 		}
 	};
-	console.log(client);
 
-	// await client.createCharacter(newCharacter);
+	message.channel.send('Personnage créé');
+
+	await client.createCharacter(newCharacter);
 };
 
 exports.help = {

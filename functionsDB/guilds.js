@@ -15,7 +15,7 @@ module.exports = client => {
 		for (const key in settings) {
 			if (data[key] !== settings[key]) data[key] = settings[key];
 		}
-		console.log('DATA = ', data)
+		console.log('DATA = ', data);
 		return data.updateOne(settings);
 	};
 

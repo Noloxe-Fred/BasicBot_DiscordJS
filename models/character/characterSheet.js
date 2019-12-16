@@ -2,9 +2,10 @@ const mongoose = require('mongoose');
 
 const characterSheetSchema = mongoose.Schema({
 	_id: mongoose.Schema.Types.ObjectId,
+	username: String,
 	main: {
-		nickname: String,
 		charactername: String,
+		faction: String,
 		gender: String,
 		level: Number,
 		xp: Number,
