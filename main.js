@@ -18,11 +18,6 @@ client.mongoose = require('./utils/mongoose');
 client.commands = new Collection();
 
 // client.commands.set('repeat', require('./commands/repeat.js'));
-// client.commands.set('role', require('./commands/role.js'));
-// client.commands.set('sinfo', require('./commands/sinfo.js'));
-// client.commands.set('image', require('./commands/image.js'));
-// client.commands.set('eval', require('./commands/eval.js'));
-// client.commands.set('config', require('./commands/config.js'));
 // Désormais on boucle
 
 fs.readdir('./commands/', (err, dirs) => {
@@ -45,9 +40,6 @@ fs.readdir('./commands/', (err, dirs) => {
 
 
 // client.on('ready', () => require('./events/ready.js')(client));
-// client.on('message', msg => require('./events/message.js')(client, msg));
-// client.on('guildMemberAdd', member => require('./events/guildMemberAdd.js')(client, member));
-// client.on('guildCreate', guild => require('./events/guildCreate.js')(client, guild));
 // Désormais:
 
 fs.readdir('./events/', (err, files) => {
