@@ -16,6 +16,7 @@ fs.readdir('./functionsDB/', (err, files) => {
 
 client.mongoose = require('./utils/mongoose');
 client.commands = new Collection();
+client.quests = new Collection();
 
 // client.commands.set('repeat', require('./commands/repeat.js'));
 // Désormais on boucle
@@ -52,6 +53,18 @@ fs.readdir('./events/', (err, files) => {
 		const evtName = file.split('.')[0];
 
 		client.on(evtName, event.bind(null, client)); // message   client.on('mesage', client, message)
+	});
+});
+
+fs.readdir('./quests/', (err, files) => {
+	if (err) return console.error;
+
+	files.forEach(file => {
+		if (!file.endsWith('.js')) return undefined;
+
+		const props = require(`./quests/${file}`);
+		const questName = file.split('.')[0];
+		client.quests.set(questName, props);
 	});
 });
 
