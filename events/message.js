@@ -16,6 +16,6 @@ module.exports = async (client, message) => {
 
 	// Ici on vérifie que la commande existe
 	const cmd = client.commands.get(command);
-	if (!cmd) return undefined;
+	if (!cmd) return message.channel.send('Cette commande n\'existe pas');
 	cmd.run(client, message, args, settings);
 };
