@@ -9,15 +9,31 @@ const characterSheetSchema = mongoose.Schema({
 		gender: String,
 		level: Number,
 		xp: Number,
-		profession: {
-			name: String,
-			grade: String
-		},
+		reputation: Number,
 		credit: Number
 	},
+	profession: {
+		name: String,
+		xp: Number,
+		level: Number,
+		firstSkill: {
+			name: String,
+			level: Number
+		},
+		secondSkill: {
+			name: String,
+			level: Number
+		}
+	},
 	skills: {
-		first: String,
-		second: String
+		first: {
+			name: String,
+			level: Number
+		},
+		second: {
+			name: String,
+			level: Number
+		}
 	},
 	health: {
 		life: Number,
@@ -29,7 +45,7 @@ const characterSheetSchema = mongoose.Schema({
 		intelligence: Number,
 		dexterity: Number,
 		constitution: Number,
-		haggle: Number,
+		initiative: Number,
 		charism: Number
 	}
 });

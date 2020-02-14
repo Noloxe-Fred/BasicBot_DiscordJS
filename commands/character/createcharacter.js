@@ -102,7 +102,7 @@ const stepThree = (newCharacter, messageOrigin, client) => {
 const stepTwo = (newCharacter, messageOrigin, client) => {
 	const displayEmbed = new MessageEmbed();
 	displayEmbed
-		.setTitle('Choix de votre compétence')
+		.setTitle('Choix de vos compétence')
 		.setThumbnail('http://www.rpgfrance.com/medias/images/elementspace_ban.png')
 		.addField('👍 Soin', 'Vous permet de vous soigner, ainsi que vos coéquipiers')
 		.addField('👎 Tir Précis', 'Votre sang froid vous permettra d\'augementer vos chances de toucher votre cible')
@@ -157,15 +157,24 @@ const stepOne = (newCharacter, messageOrigin, client) => {
 	displayEmbed
 		.setTitle('Choix de votre métier')
 		.setThumbnail('https://static.lpnt.fr/images/2019/02/04/18024426lpw-18024452-article-jpg_5936274_980x426.jpg')
-		.addField('👍 Explorateur', 'Vos missions vous emmèneront aux quatre coins de l\'univers')
-		.addField('👎 Milicien', 'Vous devrez "protéger" la population, en répondant à l\'Ordre')
-		.addField('✊ Medic', 'Tenez vous prêt à secourir les plus aguerris');
+		.setDescription('Si tu veux participer à la vie ici mon gars, va falloir filer un coup d\'main. Alors, dis moi tout, tu sais faire quoi?')
+		.addField(':man_running: Explorateur', 'Vous avez énormément parcouru le monde, connaissez la nature et les raccourcis qu\'on y trouve. ')
+		.addField(':syringe: Soigneur', 'Tenez vous prêt à secourir les plus aguerris')
+		.addField(':wrench: Ferrailleur', 'Chercheur et manipulateur de métal, orienté objet et mécanisme. ')
+		.addField(':hammer: Armurier', 'Chercheur et manipulateur de métal, orienté armes. ')
+		.addField(':pick: Collecteur', 'Maître des ressources, vous savez dénicher n\'importe quoi. ')
+		.addField(':crossed_swords: Garde', 'Vous protégez les Telluriens, en ville comme en dehors. Vous serez garants de la loi et aurez la possibilité de procéder à des arrestations. ');
 
 	messageOrigin.channel.send(displayEmbed)
 		.then(async message => {
-			await message.react('👍');
-			await message.react('👎');
-			await message.react('✊');
+			const emoji = message.guild.emojis.find(emoji => emoji.name === 'man_running');
+			console.log(emoji)
+			await message.react('🏃‍♂️');
+			await message.react('💉');
+			await message.react('🔧');
+			await message.react('🔨');
+			await message.react('⛏️');
+			await message.react('⚔️');
 			await message.react('✅');
 			newCharacter.profession.name = '';
 			// let countProfession = 0;
@@ -210,20 +219,52 @@ const stepOne = (newCharacter, messageOrigin, client) => {
 exports.run = (client, message, args) => {
 
 	let newCharacter = {
-		name: message.author.username,
-		level: 1,
-		xp: 0,
+		username: message.author.username,
+		main: {
+			charactername: message.author.username,
+			faction: 'Telluriens',
+			gender: '',
+			level: 1,
+			xp: 0,
+			reputation: 0,
+			credit: ''
+		},
 		profession: {
 			name: '',
-			grade: 'newbie'
+			xp: 0,
+			level: 1,
+			firstSkill: {
+				name: '',
+				level: 1
+			},
+			secondSkill: {
+				name: '',
+				level: 1
+			}
 		},
-		faction: '',
-		life: 50,
-		weapons: '',
-		resources: [],
-		skills: '',
-		credit: 100,
-		avatar: message.author.avatarURL()
+		skills: {
+			first: {
+				name: '',
+				level: 1
+			},
+			second: {
+				name: '',
+				level: 1
+			}
+		},
+		health: {
+			life: '',
+			energy: '',
+			sickness: ''
+		},
+		trait: {
+			strength: 0,
+			intelligence: 0,
+			dexterity: 0,
+			constitution: 0,
+			initiative: 0,
+			charism: 0
+		}
 	};
 
 	message.channel.send('Bienvenue dans la création de personnage');
