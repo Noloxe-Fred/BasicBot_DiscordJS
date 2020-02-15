@@ -1,44 +1,47 @@
 const { MessageEmbed } = require('discord.js');
+const { professions } = require('../../datas/profession');
+
+// const stepOne = require('../../quests/createCharacter/stepOne');
 // Création finale en BDD 
 
 const saveCharacter = (newCharacter, client) => {
 	console.log('SAVE CHARACTER', newCharacter);
-// if (await client.getCharacterSheet(message.author)) return message.channel.send('Vous avez déjà un personnage');
+	// if (await client.getCharacterSheet(message.author)) return message.channel.send('Vous avez déjà un personnage');
 
-// const newCharacter = {
-// 	username: user.username,
-// 	main: {
-// 		charactername: user.username,
-// 		faction: 'MadMaxiens',
-// 		gender: 'Homme',
-// 		level: 1,
-// 		xp: 0,
-// 		profession: {
-// 			name: 'Medic',
-// 			grade: 'Noob'
-// 		},
-// 		credit: 500
-// 	},
-// 	skills: {
-// 		first: 'Soin',
-// 		second: null
-// 	},
-// 	health: {
-// 		life: 100,
-// 		energy: 50,
-// 		sickness: null
-// 	},
-// 	trait: {
-// 		strength: 10,
-// 		intelligence: 9,
-// 		dexterity: 8,
-// 		constitution: 8,
-// 		haggle: 7,
-// 		charism: 7
-// 	}
-// };
+	// const newCharacter = {
+	// 	username: user.username,
+	// 	main: {
+	// 		charactername: user.username,
+	// 		faction: 'MadMaxiens',
+	// 		gender: 'Homme',
+	// 		level: 1,
+	// 		xp: 0,
+	// 		profession: {
+	// 			name: 'Medic',
+	// 			grade: 'Noob'
+	// 		},
+	// 		credit: 500
+	// 	},
+	// 	skills: {
+	// 		first: 'Soin',
+	// 		second: null
+	// 	},
+	// 	health: {
+	// 		life: 100,
+	// 		energy: 50,
+	// 		sickness: null
+	// 	},
+	// 	trait: {
+	// 		strength: 10,
+	// 		intelligence: 9,
+	// 		dexterity: 8,
+	// 		constitution: 8,
+	// 		haggle: 7,
+	// 		charism: 7
+	// 	}
+	// };
 
-// message.channel.send('Personnage créé');
+	// message.channel.send('Personnage créé');
 
 // await client.createCharacter(newCharacter);
 };
@@ -151,30 +154,35 @@ const stepTwo = (newCharacter, messageOrigin, client) => {
 		});
 };
 
-
 const stepOne = (newCharacter, messageOrigin, client) => {
 	const displayEmbed = new MessageEmbed();
 	displayEmbed
 		.setTitle('Choix de votre métier')
 		.setThumbnail('https://static.lpnt.fr/images/2019/02/04/18024426lpw-18024452-article-jpg_5936274_980x426.jpg')
 		.setDescription('Si tu veux participer à la vie ici mon gars, va falloir filer un coup d\'main. Alors, dis moi tout, tu sais faire quoi?')
-		.addField(':man_running: Explorateur', 'Vous avez énormément parcouru le monde, connaissez la nature et les raccourcis qu\'on y trouve. ')
-		.addField(':syringe: Soigneur', 'Tenez vous prêt à secourir les plus aguerris')
-		.addField(':wrench: Ferrailleur', 'Chercheur et manipulateur de métal, orienté objet et mécanisme. ')
-		.addField(':hammer: Armurier', 'Chercheur et manipulateur de métal, orienté armes. ')
-		.addField(':pick: Collecteur', 'Maître des ressources, vous savez dénicher n\'importe quoi. ')
-		.addField(':crossed_swords: Garde', 'Vous protégez les Telluriens, en ville comme en dehors. Vous serez garants de la loi et aurez la possibilité de procéder à des arrestations. ');
+	professions.forEach(profession => {
+		displayEmbed.addField(`${profession.icon} ${profession.name}`, profession.desc)
+	});
+
+	// .addField(':man_running: Explorateur', 'Vous avez énormément parcouru le monde, connaissez la nature et les raccourcis qu\'on y trouve. ')
+	// .addField(':syringe: Soigneur', 'Tenez vous prêt à secourir les plus aguerris')
+	// .addField(':wrench: Ferrailleur', 'Chercheur et manipulateur de métal, orienté objet et mécanisme. ')
+	// .addField(':hammer: Armurier', 'Chercheur et manipulateur de métal, orienté armes. ')
+	// .addField(':pick: Collecteur', 'Maître des ressources, vous savez dénicher n\'importe quoi. ')
+	// .addField(':crossed_swords: Garde', 'Vous protégez les Telluriens, en ville comme en dehors. Vous serez garants de la loi et aurez la possibilité de procéder à des arrestations. ');
 
 	messageOrigin.channel.send(displayEmbed)
 		.then(async message => {
-			const emoji = message.guild.emojis.find(emoji => emoji.name === 'man_running');
-			console.log(emoji)
-			await message.react('🏃‍♂️');
-			await message.react('💉');
-			await message.react('🔧');
-			await message.react('🔨');
-			await message.react('⛏️');
-			await message.react('⚔️');
+			professions.forEach(async profession => {
+				console.log('EMOJI IN STEONE', profession.icon)
+				return await message.react(profession.icon);
+			})
+			// await message.react('🏃‍♂️');
+			// await message.react('💉');
+			// await message.react('🔧');
+			// await message.react('🔨');
+			// await message.react('⛏️');
+			// await message.react('⚔️');
 			await message.react('✅');
 			newCharacter.profession.name = '';
 			// let countProfession = 0;
@@ -194,17 +202,14 @@ const stepOne = (newCharacter, messageOrigin, client) => {
 							message.channel.send('`Vous avez choisi plusieurs métiers, merci de recommencer`');
 							return stepOne(newCharacter, messageOrigin, client);
 						}
-						const profession = response.find(reaction => reaction.emoji.name !== '✅');
+						const professionSelected = response.find(reaction => reaction.emoji.name !== '✅');
 
-						switch (profession.emoji.name) {
-							case '👍':
+						switch (professionSelected.emoji.name) {
+							case '🏃‍♂️':
 								newCharacter.profession.name = 'Explorateur';
 								return stepTwo(newCharacter, messageOrigin, client);
-							case '👎':
+							case '💉':
 								newCharacter.profession.name = 'Milicien';
-								return stepTwo(newCharacter, messageOrigin, client);
-							case '✊':
-								newCharacter.profession.name = 'Medic';
 								return stepTwo(newCharacter, messageOrigin, client);
 							default:
 								newCharacter.profession.name = 'Erreur';
@@ -217,7 +222,7 @@ const stepOne = (newCharacter, messageOrigin, client) => {
 };
 
 exports.run = (client, message, args) => {
-
+	console.log('CreateCharatcer stepONe:', stepOne);
 	let newCharacter = {
 		username: message.author.username,
 		main: {
