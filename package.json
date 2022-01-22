@@ -2,7 +2,7 @@
   "dependencies": {
     "discord.js": "discordjs/discord.js",
     "mongoose": "^5.7.5",
-    "node-fetch": "^2.6.0"
+    "node-fetch": "^3.1.1"
   },
   "name": "discord.js",
   "version": "1.0.0",
